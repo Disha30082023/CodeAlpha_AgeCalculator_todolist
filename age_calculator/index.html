@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Modern Age Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-container">
+    <h1>Age Calculator</h1>
+
+    <form id="age-form" novalidate>
+      <label for="dob">Enter your Date of Birth:</label>
+      <input 
+        type="date" 
+        id="dob" 
+        name="dob" 
+        max="" 
+        required 
+        aria-describedby="dob-error"
+        aria-label="Date of Birth"
+      />
+      <span id="dob-error" class="error-message" role="alert" aria-live="assertive"></span>
+
+      <button type="submit">Calculate Age</button>
+    </form>
+
+    <section id="result" aria-live="polite" aria-atomic="true" class="result hidden">
+      <h2>Your Age is:</h2>
+      <p><span id="years">--</span> Years</p>
+      <p><span id="months">--</span> Months</p>
+      <p><span id="days">--</span> Days</p>
+    </section>
+  </main>
+
+  <script src="age-calculator.js"></script>
+</body>
+</html>
