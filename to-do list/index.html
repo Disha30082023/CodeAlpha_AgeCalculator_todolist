@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Modern To-Do List</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-container">
+    <h1>TO-DO LIST</h1>
+
+    <form id="task-form" autocomplete="off" style="display: flex; flex-direction: column; gap: 0.5rem; align-items: stretch;">
+  <div style="display: flex; gap: 0.5rem;">
+    <input
+      type="text"
+      id="task-input"
+      placeholder="Add a new task..."
+      required
+      maxlength="100"
+      aria-label="Task description"
+      style="flex-grow: 1;"
+    />
+    <input
+      type="datetime-local"
+      id="task-due"
+      title="Set due date and time (optional)"
+      aria-label="Task due date and time"
+      style="border-radius: var(--border-radius); border: none; padding: 0.5rem 0.8rem; font-size: 0.9rem; width: 220px;"
+    />
+  </div>
+  <br>
+  <button type="submit" style="align-self:center">Add Task</button>
+</form>
+
+
+    <ul id="todo-list" aria-live="polite"></ul>
+
+    <button id="status-toggle-btn">Check Your Task Status</button>
+
+    <div id="status-card" class="hidden glass-card" role="dialog" aria-modal="true" aria-labelledby="status-title">
+      <h2 id="status-title">Task Status</h2>
+      <section>
+        <h3>Due Tasks</h3>
+        <ul id="due-tasks-list"></ul>
+      </section>
+      <section>
+        <h3>Completed Tasks</h3>
+        <ul id="completed-tasks-list"></ul>
+      </section>
+      <button id="close-status-card">Close</button>
+    </div>
+  </main>
+
+  <script src="todo-script.js"></script>
+</body>
+</html>

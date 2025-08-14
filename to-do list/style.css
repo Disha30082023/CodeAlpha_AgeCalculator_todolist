@@ -1,0 +1,503 @@
+:root {
+  /* Theming variables */
+  --color-bg: #e0e5ec;
+  --color-primary: #5a97f5;
+  --color-primary-hover: #4178ff;
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #475569;
+  --color-glass-bg: rgba(255, 255, 255, 0.25);
+  --color-shadow-light: #ffffff;
+  --color-shadow-dark: rgba(163, 177, 198, 0.6);
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --border-radius: 15px;
+  --transition-speed: 0.3s;
+}
+
+/* Keyframe Animations */
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-bg);
+  font-family: var(--font-family);
+  color: var(--color-text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition-speed) ease-in-out;
+}
+
+/* Container and Main App */
+.app-container {
+  width: 100%;
+  max-width: 480px;
+  background: var(--color-bg);
+  padding: 2rem 2.5rem 3rem;
+  border-radius: var(--border-radius);
+  box-shadow: 
+    8px 8px 15px var(--color-shadow-dark),
+    -8px -8px 15px var(--color-shadow-light);
+  user-select: none;
+  animation: fadeInScale 0.6s ease forwards;
+}
+
+/* Title */
+h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--color-primary);
+  letter-spacing: 1.2px;
+  font-weight: 700;
+}
+
+/* Form Styles */
+#task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+#task-form > div {
+  display: flex;
+  gap: 0.5rem;
+}
+
+#task-input {
+  flex-grow: 1;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: var(--border-radius);
+  background: var(--color-glass-bg);
+  color: var(--color-text-primary);
+  box-shadow:
+    inset 4px 4px 8px rgba(255 255 255 / 0.8),
+    inset -4px -4px 8px rgba(0 0 0 / 0.15);
+  backdrop-filter: blur(10px);
+  transition: box-shadow var(--transition-speed) ease;
+}
+
+#task-input:focus {
+  outline: none;
+  box-shadow:
+    0 0 0 3px var(--color-primary);
+  background: rgba(255 255 255 / 0.4);
+}
+
+#task-due {
+  border-radius: var(--border-radius);
+  border: none;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.9rem;
+  width: 220px;
+  background: var(--color-glass-bg);
+  box-shadow:
+    inset 4px 4px 8px rgba(255 255 255 / 0.8),
+    inset -4px -4px 8px rgba(0 0 0 / 0.15);
+  backdrop-filter: blur(10px);
+  transition: box-shadow var(--transition-speed) ease;
+  color: var(--color-text-primary);
+}
+
+#task-due:focus {
+  outline: none;
+  box-shadow:
+    0 0 0 3px var(--color-primary);
+  background: rgba(255 255 255 / 0.4);
+}
+
+/* Add Task button */
+#task-form button[type="submit"] {
+  width: 180px;
+  padding: 0.65rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  background: var(--color-primary);
+  border: none;
+  border-radius: var(--border-radius);
+  box-shadow:
+    4px 4px 10px rgba(0, 0, 0, 0.15),
+    -4px -4px 10px rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.15s ease;
+  align-self: center;
+  user-select: none;
+}
+
+#task-form button[type="submit"]:hover,
+#task-form button[type="submit"]:focus {
+  background-color: var(--color-primary-hover);
+  box-shadow:
+    0 0 20px var(--color-primary-hover),
+    inset 0 0 10px var(--color-primary-hover);
+  transform: translateY(-3px);
+  outline: none;
+}
+
+#task-form button[type="submit"]:active {
+  background-color: var(--color-primary);
+  box-shadow:
+    0 0 10px var(--color-primary);
+  transform: translateY(1px);
+}
+
+/* Empty message when no tasks */
+.empty-msg {
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  padding: 1rem 0;
+}
+
+/* Task List */
+#todo-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.5rem;
+  max-height: 360px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar styling */
+#todo-list::-webkit-scrollbar {
+  width: 8px;
+}
+#todo-list::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 10px;
+}
+#todo-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Individual Task Item */
+.task-item {
+  background: var(--color-glass-bg);
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  border-radius: var(--border-radius);
+  box-shadow:
+    8px 8px 15px var(--color-shadow-dark),
+    -8px -8px 15px var(--color-shadow-light);
+  backdrop-filter: blur(10px);
+  transition: box-shadow var(--transition-speed), transform var(--transition-speed);
+  user-select: text;
+}
+
+.task-item:hover {
+  box-shadow:
+    0 0 15px var(--color-primary);
+  transform: translateY(-2px);
+}
+
+/* Checkbox */
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.9rem;
+  cursor: pointer;
+  accent-color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* Task Text */
+.task-text {
+  flex-grow: 1;
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  word-break: break-word;
+  user-select: text;
+  transition: color var(--transition-speed);
+}
+
+/* Completed task style */
+.task-item .task-checkbox:checked + .task-text,
+.completed-task {
+  color: #94a3b8;
+  text-decoration: line-through;
+  user-select: none;
+}
+
+/* Buttons inside task - Edit, Save, Delete */
+.task-item button {
+  margin-left: 0.6rem;
+  padding: 0.3rem 0.6rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--color-primary);
+  background: transparent;
+  box-shadow:
+    4px 4px 10px rgba(0 0 0 / 0),
+    -4px -4px 10px rgba(255 255 255 / 0);
+  transition: color var(--transition-speed), box-shadow var(--transition-speed);
+  user-select: none;
+}
+
+.task-item button:hover,
+.task-item button:focus {
+  color: var(--color-primary-hover);
+  outline: none;
+  box-shadow:
+    4px 4px 10px rgba(0 0 0 / 0.15),
+    -4px -4px 10px rgba(255 255 255 / 0.3);
+  transform: translateY(-2px);
+}
+
+.task-item button:active {
+  transform: translateY(0);
+}
+
+/* Hide elements with class 'hidden' */
+.hidden {
+  display: none !important;
+}
+
+/* Glass Card (Status Card) */
+.glass-card {
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  max-width: 90vw;
+  background: var(--color-glass-bg);
+  padding: 2.5rem 3rem 3rem;
+  border-radius: 25px;
+  box-shadow:
+    15px 15px 30px rgba(28, 40, 61, 0.35),
+    -15px -15px 30px rgba(255 255 255 / 0.75);
+  backdrop-filter: blur(25px);
+  border: 1.5px solid rgba(255 255 255 / 0.35);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  user-select: text;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  color: var(--color-primary);
+  font-family: var(--font-family);
+  text-align: center;
+  animation-fill-mode: forwards;
+}
+
+.show-fade-in {
+  animation: fadeInScale 0.4s ease forwards;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Status Card Titles */
+#status-card h2 {
+  font-size: 2rem;
+  margin-bottom: 1.3rem;
+  color: var(--color-primary);
+  text-shadow:
+    1px 1px 5px rgba(90, 151, 245, 0.4);
+}
+
+#status-card section {
+  margin-bottom: 1.8rem;
+  text-align: left;
+}
+
+#status-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  color: #3b4a72;
+  text-shadow: none;
+}
+
+/* Lists inside Status Card */
+#due-tasks-list,
+#completed-tasks-list {
+  list-style: disc inside;
+  max-height: 160px;
+  padding-left: 1.2rem;
+  overflow-y: auto;
+  font-size: 1rem;
+}
+
+/* Scrollbar in status card lists */
+#due-tasks-list::-webkit-scrollbar,
+#completed-tasks-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+#due-tasks-list::-webkit-scrollbar-thumb,
+#completed-tasks-list::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 10px;
+}
+
+#status-card li {
+  margin-bottom: 0.3rem;
+}
+
+/* Styling for list items in due tasks */
+.due-task {
+  font-weight: 500;
+  color: #334155;
+}
+
+/* Styling for completed tasks text */
+.completed-task {
+  color: #94a3b8;
+  text-decoration: line-through;
+  user-select: none;
+  font-weight: 600;
+}
+
+/* Time info styles in status card */
+.task-time-remaining {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #64748b;
+}
+
+/* Overdue tasks style */
+.overdue {
+  color: #d9534f; /* Bootstrap red */
+  font-weight: 700;
+}
+
+/* Button style inside status card */
+#close-status-card {
+  margin-top: 1rem;
+  padding: 0.7rem 2.2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  background: var(--color-primary);
+  border-radius: 30px;
+  box-shadow:
+    0 8px 20px rgba(65,120,255,0.5);
+  border: none;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.12s ease;
+  user-select: none;
+}
+
+#close-status-card:hover {
+  background-color: var(--color-primary-hover);
+  box-shadow:
+    0 10px 25px rgba(65, 120, 255, 0.7);
+  transform: translateY(-3px);
+}
+
+#close-status-card:active {
+  transform: translateY(1px);
+  box-shadow:
+    0 6px 15px rgba(65, 120, 255, 0.4);
+}
+
+/* Centered Check Your Task Status button */
+#status-toggle-btn {
+  display: block;          /* Make it block-level */
+  margin: 1.8rem auto 0;   /* Center horizontally with auto left/right */
+  padding: 0.75rem 1.8rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-glass-bg);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--border-radius);
+  box-shadow:
+    4px 4px 15px rgba(90, 151, 245, 0.3),
+    -4px -4px 15px rgba(255 255 255 / 0.5);
+  backdrop-filter: blur(15px);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.15s ease;
+}
+
+#status-toggle-btn:hover {
+  background-color: var(--color-primary);
+  color: white;
+  box-shadow:
+    0 0 25px var(--color-primary),
+    inset 0 0 10px var(--color-primary);
+  transform: translateY(-3px);
+}
+
+#status-toggle-btn:active {
+  transform: translateY(1px);
+  box-shadow:
+    0 0 15px var(--color-primary),
+    inset 0 0 7px var(--color-primary);
+}
+
+/* Improved layout for Completed Tasks section in status card */
+#completed-tasks-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgba(90, 151, 245, 0.15);
+  white-space: normal;
+  word-wrap: break-word;
+  gap: 1rem;
+  line-height: 1.3;
+}
+
+/* Task description in completed tasks */
+#completed-tasks-list li span:first-child {
+  flex: 1 1 60%;
+  overflow-wrap: break-word;
+  font-weight: 600;
+  color: #94a3b8;
+  text-decoration: line-through;
+  user-select: none;
+}
+
+/* Time info in completed tasks */
+#completed-tasks-list li span:last-child {
+  flex: 1 1 35%;
+  font-size: 0.85rem;
+  color: #64748b;
+  font-style: italic;
+  text-align: right;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+h1{
+    font-family:cursive;
+}
+/* Remove last border */
+#completed-tasks-list li:last-child {
+  border-bottom: none;
+}
